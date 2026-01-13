@@ -10,15 +10,13 @@ STCorr_a=STCorr(P/2+1+int64(a1/px_size),P/2+1+int64(a1/px_size),:);
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% --- Preparazione ---
 % [ny,nx,nt] = size(STCorr_a);
 ny=size(STCorr_a,1);
 nx=size(STCorr_a,2);
 nt=TauLimit;
 
 xv = a1;
-yv = a1; % se i due assi sono uguali; altrimenti usa b1
-
+yv = a1; 
 [X,Y] = meshgrid(xv,yv);
 xy = cat(3,X,Y);
 
@@ -64,7 +62,7 @@ for i = 1:nt
         startG(5) = o_G(i-1);
     end
 
-    % TypicalX non deve avere zeri
+    % 
     tx = startG;
     tx(abs(tx) < eps) = 1;   
     % options = optimoptions(options,'TypicalX',tx);
@@ -86,7 +84,7 @@ for i = 1:nt
 
     ci = nlparci(G, residual(:), 'jacobian', J);
 
-% Errore stimato come metà della larghezza dell'intervallo (circa ±1σ)
+% 
 param_errors = (ci(:,2) - ci(:,1)) / 2;
 
     Gaussb(:,:,i) = modelFunG(G, xy);
@@ -102,7 +100,7 @@ param_errors = (ci(:,2) - ci(:,1)) / 2;
     s_G_err(i,1)   = param_errors(4).*G(4).*2;
     o_G_err(i,1)   = param_errors(5);
 
-    % estrazione sezioni
+    % 
     idx_x = centerJdx + round(x_G(i) / px_size);
     idx_y = centerIdx + round(y_G(i) / px_size);
 
@@ -124,4 +122,5 @@ for i = 1:TauLimit
 end
 
 spatiotemporalCorrelationViewer(time_vec, frame_time, px_size, a1, b1, TauLimit, STCorr_a(:,:,1:TauLimit), Gaussb,...
+
     amp_G, s_G, o_G, R2_G, amp_G_err, s_G_err, o_G_err)
