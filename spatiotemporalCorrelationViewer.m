@@ -56,7 +56,7 @@ rectangle('Position',[x_min, y_min, x_max - x_min, y_max - y_min], ...
           'EdgeColor','k', 'LineWidth',.5, 'LineStyle','-');
 
 
-% --- Subplot Sezioni centrali ---
+% ------
 ax4 = subplot(2,4,4);
 hold on
 idx_x = round(size(STCorr_a,2)/2);
@@ -78,38 +78,38 @@ grid on
 box on
 set(gca,'fontsize',14)
 
-% --- Subplot Ampiezza ---
+% ------
 ax5 = subplot(2,4,5);
 % p5 = plot(amp_G,'.-'); hold on; yline(mean(amp_G));
 p5 = errorbar(time_vec,amp_G,amp_G_err,'.-','LineWidth',1.5); hold on;
 xlabel('\tau (s)'); ylabel('Amplitude G_0'); xlim([0 time_vec(end)+frame_time]); set(gca,'fontsize',14)
 ylim ([0.9*min(amp_G-amp_G_err) 1.1*max(amp_G+amp_G_err)])
 
-% --- Subplot Varianza ---
+% ------
 ax6 = subplot(2,4,7);
 p6 = errorbar(time_vec,var_G,var_G_err,'.-','LineWidth',1.5); hold on;
 xlabel('\tau (s)'); ylabel('Variance \sigma^2 (\mum^2)'); xlim([0 time_vec(end)+frame_time]); set(gca,'fontsize',14)
 ylim ([0.9*min(var_G-var_G_err) 1.1*max(var_G+var_G_err)])
 
-% --- Subplot Offset ---
+% ------
 ax7 = subplot(2,4,6);
 p7 = errorbar(time_vec,o_G,o_G_err,'.-','LineWidth',1.5); hold on;
 xlabel('\tau (s)'); ylabel('Offset G_\infty'); xlim([0 time_vec(end)+frame_time]); set(gca,'fontsize',14)
 ylim (sort([0.9*min(o_G-o_G_err) 1.1*max(o_G+o_G_err)]))
 
-% --- Subplot R^2 ---
+% ------
 ax8 = subplot(2,4,8);
 p8 = plot(time_vec,R2_G,'.-','LineWidth',1.5); hold on; yline(mean(R2_G));
 xlabel('\tau (s)'); ylabel('R^2'); xlim([0 time_vec(end)+frame_time]); set(gca,'fontsize',14)
 ylim ([min(R2_G) max(R2_G)])
 
-% --- Linee verticali rosse ---
+% ------
 vline(1) = line(ax5,frame_time*[1 1],ylim(ax5),'Color','r','LineWidth',2,'HandleVisibility','off');
 vline(2) = line(ax6,frame_time*[1 1],ylim(ax6),'Color','r','LineWidth',2,'HandleVisibility','off');
 vline(3) = line(ax7,frame_time*[1 1],ylim(ax7),'Color','r','LineWidth',2,'HandleVisibility','off');
 vline(4) = line(ax8,frame_time*[1 1],ylim(ax8),'Color','r','LineWidth',2,'HandleVisibility','off');
 
-% --- variabile per il frame-lag corrente ---
+% ------
 currentTau = 1;
 
 % --- Slider ---
@@ -146,26 +146,26 @@ function timerCallback(~,~)
     end
 end
 
-% --- Funzione per aggiornare tau ---
+% ------
 function updateTau(tau)
     % Aggiorna superfici
     set(s1,'ZData',STCorr_a(:,:,tau));
     set(s2,'ZData',Gaussb(:,:,tau));
     set(pl3,'CData',-Gaussb(:,:,tau)+STCorr_a(:,:,tau));
 
-    % Aggiorna sezioni centrali
+    % 
     set(hZx,'YData',STCorr_a(idx_y,:,tau));
     set(hGx,'YData',Gaussb(idx_y,:,tau));
     set(hZy,'YData',STCorr_a(:,idx_x,tau));
     set(hGy,'YData',Gaussb(:,idx_x,tau));
 
-    % Aggiorna titoli
+    % 
     title(ax1,sprintf('Data. Frame-lag %d',tau));
     title(ax2,sprintf('Fit. Frame-lag %d',tau));
     title(ax3,sprintf('Residuals. Frame-lag %d',tau));
     title(ax4,sprintf('Sections. Frame-lag %d',tau));
 
-    % Aggiorna linee verticali
+    % 
     for k = 1:4
         set(vline(k),'XData',[tau*frame_time tau*frame_time]);
     end
@@ -190,3 +190,4 @@ function closeFigure(~,~)
 end
 
 end
+
