@@ -140,10 +140,6 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 
-
-
-% end
-
 hFig = figure('Name','iMSD output','NumberTitle','off');
 
 subplot (2,3,1)
@@ -214,7 +210,6 @@ pos_inset(1) = pos_inset(1) - 0.17;  % move left
 pos_inset(2) = (pos0_inset(2) -pos_inset(4)+ pos0_inset(4))-0.03;  % move down
 set(ax_inset, 'Position', pos_inset)
 
-% return
 subplot (2,3,4)
 plot2x=errorbar(time_vec,x_G,x_G_err,'o','LineWidth',1,'Color',[.9 .6 0]);
 hold on
@@ -349,6 +344,7 @@ set(ax2, 'Position', pos_b)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 fprintf('Done');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %% EXPORT RESULTS TO EXCEL
 
 if export_value==1
@@ -478,4 +474,5 @@ writetable(T_results, export_filename, ...
     'Sheet', 'Fit_Parameters', 'WriteMode', 'overwrite');
 
 fprintf('\nExported results to: %s\n', export_filename);
+
 end
