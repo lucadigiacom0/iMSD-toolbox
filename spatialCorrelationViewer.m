@@ -115,7 +115,7 @@ rectangle('Position',[x_min, y_min, x_max - x_min, y_max - y_min], ...
     xlim([0 nFrames+1])
     set(gca,'fontsize',14)
 
-    % --- Linee verticali rosse nei 4 subplot ---
+    % ----
     vline(1) = line(ax4,[1 1],ylim(ax4),'Color','r','LineWidth',2,'HandleVisibility','off');
     vline(2) = line(ax5,[1 1],ylim(ax5),'Color','r','LineWidth',2,'HandleVisibility','off');
     vline(3) = line(ax6,[1 1],ylim(ax6),'Color','r','LineWidth',2,'HandleVisibility','off');
@@ -154,7 +154,7 @@ function timerCallback(~,~)
     updateFrame(frame);
 end
 
-% --- Funzione per aggiornare il frame ---
+% ------
 function updateFrame(frame)
     % Aggiorna superfici
     set(s1,'ZData',Z2(:,:,frame));
@@ -167,12 +167,12 @@ function updateFrame(frame)
                      'YData',ylim(eval(['ax' num2str(3+k)])));
     end
 
-    % Aggiorna titoli
+    % 
     title(ax1,sprintf('Data. Frame %d',frame));
     title(ax2,sprintf('Fit. Frame %d',frame));
     title(ax3,sprintf('Residuals. Frame %d',frame));
 
-    % Aggiorna sezioni centrali
+    % 
     idx_x = round(size(Z2,2)/2);
     idx_y = round(size(Z2,1)/2);
     set(hZx,'YData',Z2(idx_y,:,frame));
@@ -205,3 +205,4 @@ function closeFigure(~,~)
 end
 
 end
+
