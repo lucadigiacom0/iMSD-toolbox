@@ -1,0 +1,36 @@
+clear
+clc
+
+px_size = 0.05;
+frame_time = 0.075;
+
+sigma0 = 0.09;
+sigma0_err = 0.015;
+
+L = 0.400;          % µm
+tau_c =1.5;       % s
+
+H = 256;
+N_spot = 100;
+n_frames = 1000;
+
+intens = 160;
+noise_l = 8;
+
+tau_bl = 1000;
+k_bl = 1/tau_bl;
+
+saveName = 'sim_confined.tif';
+
+simulateConfinedGaussians_bleaching( ...
+    N_spot,...
+    [H H],...
+    n_frames,...
+    L/px_size,...
+    tau_c/frame_time,...
+    sigma0/px_size,...
+    sigma0_err/px_size,...
+    intens,...
+    noise_l,...
+    k_bl,...
+    saveName);
