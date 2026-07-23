@@ -14,7 +14,7 @@ A = double(imgStack);
 %%% input parameters (edit for your acquisition)
 px_size    = 0.05;                 %%% pixel size (micron)
 frame_time = 0.192;                %%% time between successive frames (s)
-PSF_waist  = 0.25;                 %%% PSF waist from calibration
+PSF_FWHM  = 0.25;                 %%% PSF FWHM from calibration
 
 N = size(A,3);
 P = size(A,1);

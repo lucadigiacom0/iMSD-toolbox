@@ -294,6 +294,7 @@ fprintf('R²                = %.4f\n', R2_conf);
 fprintf('***********************************\n');
 
 end
+PSF_waist=PSF_FWHM*0.6;
 
 %%% Size (nm): deconvolve the PSF from the intercept sigma0^2 (mainly for
 %%% organelles). Size = sqrt(sigma0^2 - PSF_waist^2) when the object is
