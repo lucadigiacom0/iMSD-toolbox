@@ -14,13 +14,13 @@ A = double(imgStack);
 %%% input parameters (edit for your acquisition)
 px_size    = 0.05;                 %%% pixel size (micron)
 frame_time = 0.192;                %%% time between successive frames (s)
-PSF_FWHM  = 0.25;                 %%% PSF FWHM from calibration
+PSF_FWHM  = 0.3;                 %%% PSF FWHM from calibration
 
 N = size(A,3);
 P = size(A,1);
 R = px_size*P;
 
-SpatialLimit = 24;                 %%% linear extent of spatial domain (px, even)
+SpatialLimit = 32;                 %%% linear extent of spatial domain (px, even)
 TauLimit     = int64(N/10)+1;      %%% lag-time domain
 fitt2comp = false;                 %%% true = two-component fit (two iMSD curves)
 

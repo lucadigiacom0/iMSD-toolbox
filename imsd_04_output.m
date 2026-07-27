@@ -38,12 +38,18 @@ R2_mob = 1 - sum((yr - y_fit_lin(rel)).^2) / sum((yr - mean(yr)).^2);
 %     PSF_FWHM = 0.25;   % default FWHM (µm)
 % end
 
-PSF_var = (PSF_FWHM/2.355)^2;
+% PSF_FWHM is provided in µm
+% if ~exist('PSF_FWHM','var')
+%     PSF_FWHM = 0.25;   % default FWHM (µm)
+% end
+
+PSF_var = (PSF_FWHM)^2;
 if offs02 > PSF_var
-    Size_nm = sqrt(offs02 - PSF_var)*1000;
+    Size_nm = sqrt((offs02 - PSF_var))*1000;
 else
     Size_nm = sqrt(max(offs02,0))*1000;
 end
+
 
 %%% ----- TRAPPED amplitude decay -> tau_T (Eq. A20) -----
 tauD = sigma_T^2/(4*max(D_M,eps));
@@ -65,7 +71,7 @@ fprintf('***********************************\niMSD output (two-component):\n\n')
 fprintf('  tau_T (trapping time) = %.4f +/- %.4f s   (R^2 = %.3f)\n', tauT, tauT_err, R2_dec);
 fprintf('  D_mobile              = %.4f +/- %.4f um^2/s   (R^2 = %.3f)\n', D_M, D_M_err, R2_mob);
 fprintf('  sigma0^2 (intercept)  = %.4f +/- %.4f um^2\n', offs02, offs02_err);
-fprintf('  Size (deconvolved)    = %.1f nm   (PSF_waist = %.0f nm)\n', Size_nm, PSF_waist*1000);
+fprintf('  Size                  = %.1f nm   (PSF_FWHM = %.0f nm)\n', Size_nm, PSF_FWHM*1000);
 fprintf('  sigma_T (waist)       = %.4f um   (trapped iMSD = %.4f um^2, flat)\n', sigma_T, sigma_T^2);
 fprintf('  tau_D = %.4f s  ->  tau_T/tau_D = %.1f\n', tauD, tauT/tauD);
 if tauT < 3*tauD
@@ -302,15 +308,15 @@ end
 %     PSF_FWHM = 0.25;   % default FWHM (µm)
 % end
 
-PSF_var = (PSF_FWHM/2.355)^2;
+PSF_var = (PSF_FWHM)^2;
 if offs02 > PSF_var
-    Size_nm = sqrt(offs02 - PSF_var)*1000;
+    Size_nm = sqrt((offs02 - PSF_var))*1000;
 else
     Size_nm = sqrt(max(offs02,0))*1000;
 end
 
 fprintf('Sconf                   = %.4f   (D_micro/D_macro; NaN if directed)\n', Sconf);
-fprintf('Size (deconvolved)      = %.1f nm   (PSF_FWHM = %.0f nm)\n', Size_nm, PSF_FWHM*1000);
+fprintf('Size                    = %.1f nm   (PSF_FWHM = %.0f nm)\n', Size_nm, PSF_FWHM*1000);
 fprintf('***********************************\n');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
