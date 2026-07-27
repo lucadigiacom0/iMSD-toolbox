@@ -32,15 +32,17 @@ D_M_err    = sqrt(abs(Clin(1,1)))/4;
 offs02_err = sqrt(abs(Clin(2,2)));
 R2_mob = 1 - sum((yr - y_fit_lin(rel)).^2) / sum((yr - mean(yr)).^2);
 
-%%% Size (nm): deconvolve the PSF from the intercept sigma0^2 (mainly for
-%%% organelles). Size = sqrt(sigma0^2 - PSF_waist^2) when the object is
-%%% resolvable (sigma0^2 > PSF_waist^2); otherwise report the raw sigma0.
-if ~exist('PSF_waist','var'), PSF_waist = 0.25; end
-PSF_var = PSF_waist^2;
+
+% PSF_FWHM is provided in µm
+% if ~exist('PSF_FWHM','var')
+%     PSF_FWHM = 0.25;   % default FWHM (µm)
+% end
+
+PSF_var = (PSF_FWHM/2.355)^2;
 if offs02 > PSF_var
     Size_nm = sqrt(offs02 - PSF_var)*1000;
 else
-    Size_nm = sqrt(max(offs02,0))*1000;   %%% cannot deconvolve -> raw apparent size
+    Size_nm = sqrt(max(offs02,0))*1000;
 end
 
 %%% ----- TRAPPED amplitude decay -> tau_T (Eq. A20) -----
@@ -295,17 +297,20 @@ fprintf('***********************************\n');
 
 end
 
-%%% Size (nm): deconvolve the PSF from the intercept sigma0^2 (mainly for
-%%% organelles). Size = sqrt(sigma0^2 - PSF_waist^2) when the object is
-%%% resolvable (sigma0^2 > PSF_waist^2); otherwise report the raw sigma0.
-if ~exist('PSF_waist','var'), PSF_waist = 0.25; end
-if offs02 > PSF_waist^2
-    Size_nm = sqrt(offs02 - PSF_waist^2)*1000;
+% PSF_FWHM is provided in µm
+% if ~exist('PSF_FWHM','var')
+%     PSF_FWHM = 0.25;   % default FWHM (µm)
+% end
+
+PSF_var = (PSF_FWHM/2.355)^2;
+if offs02 > PSF_var
+    Size_nm = sqrt(offs02 - PSF_var)*1000;
 else
-    Size_nm = sqrt(max(offs02,0))*1000;   %%% cannot deconvolve -> raw apparent size
+    Size_nm = sqrt(max(offs02,0))*1000;
 end
+
 fprintf('Sconf                   = %.4f   (D_micro/D_macro; NaN if directed)\n', Sconf);
-fprintf('Size (deconvolved)      = %.1f nm   (PSF_waist = %.0f nm)\n', Size_nm, PSF_waist*1000);
+fprintf('Size (deconvolved)      = %.1f nm   (PSF_FWHM = %.0f nm)\n', Size_nm, PSF_FWHM*1000);
 fprintf('***********************************\n');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
