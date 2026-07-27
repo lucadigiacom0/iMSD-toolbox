@@ -294,7 +294,6 @@ fprintf('R²                = %.4f\n', R2_conf);
 fprintf('***********************************\n');
 
 end
-PSF_waist=PSF_FWHM*0.6;
 
 %%% Size (nm): deconvolve the PSF from the intercept sigma0^2 (mainly for
 %%% organelles). Size = sqrt(sigma0^2 - PSF_waist^2) when the object is
@@ -414,7 +413,7 @@ plot_fit_alpha=plot(x_fit,y_fit_alpha,'m--','LineWidth',1.5);
 
 
 text(0.05, 0.95, sprintf(['Power-law \n\n' ...
-    '\\alpha = %.3f\nD* = %.3f \\mum^2/s  \n\\sigma_0^2 = %.3f \\mum^2 \nR^2=%.3f'], alpha,a0/4,c0,R2),...
+    '\\alpha = %.3f\n\\kappa = %.3f \\mum^2/s  \n\\sigma_0^2 = %.3f \\mum^2 \nR^2=%.3f'], alpha,a0,c0,R2),...
     'Units', 'normalized', 'VerticalAlignment', 'top', 'FontSize', 10,'BackgroundColor', 'w', ...
     'EdgeColor', 'k');
 
